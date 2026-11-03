@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
-  MainApp({super.key});
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  bool isDarkMode = false;
 
   final String userName = 'Azkia Alfin Zulfikar';
   final String role = 'Software Enginering';
@@ -22,8 +29,20 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi Profil',
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        brightness: Brightness.light,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueAccent,
+          brightness: Brightness.light,
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueAccent,
+          brightness: Brightness.dark,
+        ),
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -31,6 +50,68 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: Icon(isDarkMode ? Icons.wb_sunny : Icons.nightlight_round),
+              tooltip: isDarkMode ? 'Mode Terang' : 'Mode Gelap',
+              onPressed: () {
+                setState(() {
+                  isDarkMode = !isDarkMode;
+                });
+              },
+            ),
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  userName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                accountEmail: Text(role),
+                currentAccountPicture: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, size: 40, color: Colors.blueAccent),
+                ),
+                decoration: const BoxDecoration(color: Colors.blueAccent),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Beranda'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Profil'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Pengaturan'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.redAccent),
+                title: const Text(
+                  'Keluar',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -41,9 +122,7 @@ class MainApp extends StatelessWidget {
                 backgroundColor: Colors.grey,
                 child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
-
               const SizedBox(height: 16),
-
               Column(
                 children: [
                   Text(
@@ -57,13 +136,15 @@ class MainApp extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     role,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: isDarkMode ? Colors.grey[400] : Colors.grey[700],
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
               const SizedBox(height: 24),
-
               ElevatedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -78,34 +159,27 @@ class MainApp extends StatelessWidget {
                 label: const Text('Edit Profil'),
               ),
               const SizedBox(height: 24),
-
               Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 12,
                   horizontal: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
+                  color: isDarkMode ? Colors.grey[850] : Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const StatItem(count: '15', label: 'Proyek'),
-                    const SizedBox(
-                      width: 16,
-                    ), // Perbaikan 2 & 3: Koma + ubah height ke width
-                    const StatItem(count: '1.2K', label: 'Followers'),
-                    const SizedBox(width: 16),
-                    const StatItem(
-                      count: '42',
-                      label: 'Following',
-                    ), // Perbaikan 4: 42 diubah ke String '42'
+                    StatItem(count: '10', label: 'Proyek'),
+                    SizedBox(width: 16),
+                    StatItem(count: '30K', label: 'Followers'),
+                    SizedBox(width: 16),
+                    StatItem(count: '11', label: 'Following'),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
-
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -114,8 +188,6 @@ class MainApp extends StatelessWidget {
                 ),
               ),
               const Divider(),
-
-              // Perbaikan 5b: ListView.builder aman di dalam Column dengan physics dan shrinkWrap
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -135,7 +207,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-    ); // Perbaikan 6: Penutupan kurung dirapikan
+    );
   }
 }
 
@@ -158,7 +230,13 @@ class StatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: Theme.of(context).textTheme.bodySmall?.color,
+          ),
+        ),
       ],
     );
   }
