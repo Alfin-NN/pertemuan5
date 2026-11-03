@@ -33,7 +33,6 @@ class MainApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
-          // Perbaikan 5a: Memungkinkan scroll halaman
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
@@ -43,7 +42,7 @@ class MainApp extends StatelessWidget {
                 child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
 
-              const SizedBox(height: 16), // Disesuaikan untuk spacing vertikal
+              const SizedBox(height: 16),
 
               Column(
                 children: [
