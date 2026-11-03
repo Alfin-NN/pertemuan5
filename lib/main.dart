@@ -30,8 +30,20 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
+          // Tombol di pojok kanan atas AppBar
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications),
+              tooltip: 'Notifikasi',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Tidak ada notifikasi baru.')),
+                );
+              },
+            ),
+          ],
         ),
-        // === MENAMBAHKAN SIDEBAR (DRAWER) ===
+        // Sidebar di pojok kiri atas
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
