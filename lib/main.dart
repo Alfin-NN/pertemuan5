@@ -31,8 +31,59 @@ class MainApp extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
         ),
+        // === MENAMBAHKAN SIDEBAR (DRAWER) ===
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  userName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                accountEmail: Text(role),
+                currentAccountPicture: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.person, size: 40, color: Colors.blueAccent),
+                ),
+                decoration: const BoxDecoration(color: Colors.blueAccent),
+              ),
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Beranda'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.work),
+                title: const Text('Pengalaman'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Pengaturan'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text(
+                  'Keluar',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         body: SingleChildScrollView(
-          // Perbaikan 5a: Memungkinkan scroll halaman
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
@@ -41,9 +92,7 @@ class MainApp extends StatelessWidget {
                 backgroundColor: Colors.grey,
                 child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
-
-              const SizedBox(height: 16), // Disesuaikan untuk spacing vertikal
-
+              const SizedBox(height: 16),
               Column(
                 children: [
                   Text(
@@ -63,7 +112,6 @@ class MainApp extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-
               ElevatedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -78,7 +126,6 @@ class MainApp extends StatelessWidget {
                 label: const Text('Edit Profil'),
               ),
               const SizedBox(height: 24),
-
               Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 12,
@@ -90,22 +137,16 @@ class MainApp extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const StatItem(count: '15', label: 'Proyek'),
-                    const SizedBox(
-                      width: 16,
-                    ), // Perbaikan 2 & 3: Koma + ubah height ke width
-                    const StatItem(count: '1.2K', label: 'Followers'),
-                    const SizedBox(width: 16),
-                    const StatItem(
-                      count: '42',
-                      label: 'Following',
-                    ), // Perbaikan 4: 42 diubah ke String '42'
+                  children: const [
+                    StatItem(count: '15', label: 'Proyek'),
+                    SizedBox(width: 16),
+                    StatItem(count: '1.2K', label: 'Followers'),
+                    SizedBox(width: 16),
+                    StatItem(count: '42', label: 'Following'),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
-
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -114,8 +155,6 @@ class MainApp extends StatelessWidget {
                 ),
               ),
               const Divider(),
-
-              // Perbaikan 5b: ListView.builder aman di dalam Column dengan physics dan shrinkWrap
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -135,7 +174,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-    ); // Perbaikan 6: Penutupan kurung dirapikan
+    );
   }
 }
 
