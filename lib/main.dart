@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 void main() {
   runApp(MainApp());
 }
@@ -11,7 +13,7 @@ class MainApp extends StatelessWidget {
   final List<String> experiences = [
     'Senior Backend Engineer - EDC Bank DKI',
     'Backend & System Architect - Secure Payment EDC',
-    'Lead Developer - Aplikasi Sekurindo'
+    'Lead Developer - Aplikasi Sekurindo', // Perbaikan 1: Ditambahkan koma
     'Backend Engineer - Pengembangan Sistem E-money',
   ];
 
@@ -30,25 +32,27 @@ class MainApp extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
         ),
-        body: Padding(
+        body: SingleChildScrollView(
+          // Perbaikan 5a: Memungkinkan scroll halaman
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-
               const CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.grey,
                 child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
 
-
-              const SizedBox(width: 16),
+              const SizedBox(height: 16), // Disesuaikan untuk spacing vertikal
 
               Column(
                 children: [
                   Text(
                     userName,
-                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
@@ -64,8 +68,12 @@ class MainApp extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Fitur edit belum aktif pada modul statis.'))
-                   );
+                    const SnackBar(
+                      content: Text(
+                        'Fitur edit belum aktif pada modul statis.',
+                      ),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.edit),
                 label: const Text('Edit Profil'),
@@ -73,20 +81,27 @@ class MainApp extends StatelessWidget {
               const SizedBox(height: 24),
 
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const StatItem(count: '15', label: 'Proyek'),
-                    const SizedBox(height: 24),
+                    const SizedBox(
+                      width: 16,
+                    ), // Perbaikan 2 & 3: Koma + ubah height ke width
                     const StatItem(count: '1.2K', label: 'Followers'),
-                    const SizedBox(width: 24),
-
-                    StatItem(count: 42, label: 'Following'),
+                    const SizedBox(width: 16),
+                    const StatItem(
+                      count: '42',
+                      label: 'Following',
+                    ), // Perbaikan 4: 42 diubah ke String '42'
                   ],
                 ),
               ),
@@ -100,7 +115,11 @@ class MainApp extends StatelessWidget {
                 ),
               ),
               const Divider(),
+
+              // Perbaikan 5b: ListView.builder aman di dalam Column dengan physics dan shrinkWrap
               ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: experiences.length,
                 itemBuilder: (context, index) {
                   return Card(
@@ -111,14 +130,13 @@ class MainApp extends StatelessWidget {
                       title: Text(experiences[index]),
                     ),
                   );
-                }
+                },
               ),
             ],
           ),
         ),
       ),
-      );
-    );
+    ); // Perbaikan 6: Penutupan kurung dirapikan
   }
 }
 
@@ -141,13 +159,7 @@ class StatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
       ],
     );
   }
