@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 void main() {
   runApp(MainApp());
 }
@@ -7,13 +5,14 @@ void main() {
 class MainApp extends StatelessWidget {
   MainApp({super.key});
 
-  final String userName = 'Muhamad Sheva Ramadhan';
-  final String role = 'Sofware Engineering';
+  final String userName = 'I Ketut Gunawan, S.Kom, M.T.I.';
+  final String role = 'Senior Backend Engineer & Dosen';
 
   final List<String> experiences = [
-    'Marketing - Balifiber',
-    'Staff Area service- superland',
-    'Lead Developer - Aplikasi Sekurindo',
+    'Senior Backend Engineer - EDC Bank DKI',
+    'Backend & System Architect - Secure Payment EDC',
+    'Lead Developer - Aplikasi Sekurindo'
+    'Backend Engineer - Pengembangan Sistem E-money',
   ];
 
   @override
@@ -30,89 +29,26 @@ class MainApp extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
-          // Tombol di pojok kanan atas AppBar
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              tooltip: 'Notifikasi',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Tidak ada notifikasi baru.')),
-                );
-              },
-            ),
-          ],
         ),
-        // Sidebar di pojok kiri atas
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(
-                  userName,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                accountEmail: Text(role),
-                currentAccountPicture: const CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.person, size: 40, color: Colors.blueAccent),
-                ),
-                decoration: const BoxDecoration(color: Colors.blueAccent),
-              ),
-              ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text('Beranda'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.work),
-                title: const Text('Pengalaman'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Pengaturan'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.logout, color: Colors.red),
-                title: const Text(
-                  'Keluar',
-                  style: TextStyle(color: Colors.red),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
+        body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+
               const CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.grey,
                 child: Icon(Icons.person, size: 50, color: Colors.white),
               ),
-              const SizedBox(height: 16),
+
+
+              const SizedBox(width: 16),
+
               Column(
                 children: [
                   Text(
                     userName,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
@@ -124,41 +60,38 @@ class MainApp extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
+
               ElevatedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Fitur edit belum aktif pada modul statis.',
-                      ),
-                    ),
-                  );
+                    const SnackBar(content: Text('Fitur edit belum aktif pada modul statis.'))
+                   );
                 },
                 icon: const Icon(Icons.edit),
                 label: const Text('Edit Profil'),
               ),
               const SizedBox(height: 24),
+
               Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 16,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
                   color: Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    StatItem(count: '15', label: 'Proyek'),
-                    SizedBox(width: 16),
-                    StatItem(count: '1.2K', label: 'Followers'),
-                    SizedBox(width: 16),
-                    StatItem(count: '42', label: 'Following'),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const StatItem(count: '15', label: 'Proyek'),
+                    const SizedBox(height: 24),
+                    const StatItem(count: '1.2K', label: 'Followers'),
+                    const SizedBox(width: 24),
+
+                    StatItem(count: 42, label: 'Following'),
                   ],
                 ),
               ),
               const SizedBox(height: 24),
+
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -168,8 +101,6 @@ class MainApp extends StatelessWidget {
               ),
               const Divider(),
               ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
                 itemCount: experiences.length,
                 itemBuilder: (context, index) {
                   return Card(
@@ -180,12 +111,13 @@ class MainApp extends StatelessWidget {
                       title: Text(experiences[index]),
                     ),
                   );
-                },
+                }
               ),
             ],
           ),
         ),
       ),
+      );
     );
   }
 }
@@ -209,7 +141,13 @@ class StatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
+          ),
+        ),
       ],
     );
   }
